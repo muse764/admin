@@ -1,9 +1,9 @@
-import "./globals.css";
-import { Sidebar } from './components';
+import { Layout } from './components/lay';
+import './globals.css';
 
 export const metadata = {
-  title: "Muse",
-  description: "Music Streaming Service",
+  title: 'Muse',
+  description: 'Music Streaming Service',
 };
 
 export default function RootLayout({
@@ -14,8 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Sidebar />
-        {children}
+        <Layout>{children}</Layout>
       </body>
     </html>
   );

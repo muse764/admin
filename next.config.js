@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    API_URL: 'http://localhost:36841/api/v1',
+    API_URL: 'http://api.muse.com/api/v1',
   },
 };
 

@@ -54,8 +54,8 @@ export default function Modall({
           <TextField
             type="text"
             onChange={handleChange}
-            label="Full Name"
-            value={popupInfo.full_name}
+            label="Name"
+            value={popupInfo.name}
             id="full_name"
             name="full_name"
             autoComplete="full_name"
@@ -102,21 +102,19 @@ export default function Modall({
         </FormControl>
 
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Role</InputLabel>
+          <InputLabel id="demo-simple-select-label">Type</InputLabel>
           <Select
             labelId="demo-simple-select-label"
-            id="role"
-            name="role"
-            value={popupInfo.role}
-            label="Role"
+            id="type"
+            name="type"
+            value={popupInfo.type}
+            label="Type"
             sx={{ m: 1 }}
             onChange={handleChange}
           >
-            <MenuItem value={'USER'}>user</MenuItem>
-            <MenuItem value={'ARTIST'}>artist</MenuItem>
-            <MenuItem value={'MODERATOR'}>moderator</MenuItem>
-            <MenuItem value={'ADMIN'}>admin</MenuItem>
-            <MenuItem value={'SUPERADMIN'}>super admin</MenuItem>
+            <MenuItem value={'single'}>Single</MenuItem>
+            <MenuItem value={'album'}>Album</MenuItem>
+            <MenuItem value={'compilation'}>Compilation</MenuItem>
           </Select>
         </FormControl>
         <Button type="reset">Cancel</Button>

@@ -21,18 +21,18 @@ import {
   Typography,
 } from '@mui/material';
 
-export default function Tracks() {
-  const [tracks, setTracks] = useState([]);
+export default function Artists() {
+  const [artists, setArtists] = useState([]);
 
-  function retrieveTracks() {
+  function retrieveArtists() {
     axios
-      .get(`${process.env.API_URL}/tracks`, {
+      .get(`${process.env.API_URL}/artists`, {
         headers: {},
         timeout: 1000,
       })
       .then((response) => {
-        const tracks = response.data.tracks;
-        setTracks(tracks);
+        const artists = response.data.artists;
+        setArtists(artists);
       })
       .catch((error) => {
         console.log(error);
@@ -40,19 +40,21 @@ export default function Tracks() {
   }
 
   useEffect(() => {
-    retrieveTracks();
+    retrieveArtists();
   }, []);
 
   const columns: GridColDef[] = [
     // { field: 'id', headerName: 'ID', flex: 1 },
-    { field: 'name', headerName: 'Name', flex: 1 },
+    { field: 'full_name', headerName: 'Full Name', flex: 1 },
+    { field: 'username', headerName: 'Username', flex: 1 },
+    { field: 'email', headerName: 'Email', flex: 1 },
     // { field: 'role', headerName: 'Role', flex: 1 },
     {
-      field: 'published',
-      headerName: 'Published',
+      field: 'active',
+      headerName: 'Active',
       flex: 1,
       renderCell: (params: GridRenderCellParams<any>) => {
-        if (params.row.published) {
+        if (params.row.active) {
           return <CheckIcon />;
         } else {
           return <CloseIcon />;
@@ -61,7 +63,7 @@ export default function Tracks() {
     },
   ];
 
-  const rows: GridRowsProp = tracks;
+  const rows: GridRowsProp = artists;
 
   return (
     <main className="App">
@@ -76,7 +78,7 @@ export default function Tracks() {
           <Stack spacing={3}>
             <Stack direction="row" justifyContent="space-between" spacing={4}>
               <Stack spacing={1}>
-                <Typography variant="h4">Tracks</Typography>
+                <Typography variant="h4">Artists</Typography>
               </Stack>
               <div>
                 <Button

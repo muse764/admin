@@ -1,8 +1,7 @@
 'use client';
-
+import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-import { Button } from '@mui/material';
 import {
   DataGrid,
   GridColDef,
@@ -11,6 +10,9 @@ import {
 } from '@mui/x-data-grid';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+
+import { Box, Button, Card, Container, Stack, SvgIcon, Typography } from '@mui/material';
+import Image from 'next/image';
 import Modall from './components/Modall';
 
 export default function Genres() {
@@ -20,7 +22,6 @@ export default function Genres() {
   const [popupInfo, setPopupInfo] = useState({
     id: '',
     name: '',
-    active: false,
   });
 
   const handleChange = (event: any) => {
@@ -50,7 +51,6 @@ export default function Genres() {
         setPopupInfo({
           id: '',
           name: '',
-          active: false,
         });
         setCreateModalOpen(false);
         retrieveGenres();
@@ -114,7 +114,6 @@ export default function Genres() {
         setPopupInfo({
           id: '',
           name: '',
-          active: false,
         });
         setUpdateModalOpen(false);
         retrieveGenres();
@@ -125,7 +124,7 @@ export default function Genres() {
   }
 
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', flex: 1 },
+    // { field: 'id', headerName: 'ID', flex: 1 },
     { field: 'name', headerName: 'Name', flex: 1 },
     {
       field: 'active',
@@ -180,31 +179,60 @@ export default function Genres() {
   };
 
   return (
-    <main>
-      <h1>Genres</h1>
-      <Button onClick={handleCreateModalOpen}>Create</Button>
+    <main className="App">
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          py: 8,
+        }}
+      >
+        <Container maxWidth="xl">
+          <Stack spacing={3}>
+            <Stack direction="row" justifyContent="space-between" spacing={4}>
+              <Stack spacing={1}>
+                <Typography variant="h4">Genres</Typography>
+              </Stack>
+              <div>
+                <Button
+                  startIcon={
+                    <SvgIcon fontSize="small">
+                      <PlusIcon />
+                    </SvgIcon>
+                  }
+                  onClick={handleCreateModalOpen}
+                  variant="contained"
+                >
+                  Add
+                </Button>
+              </div>
+            </Stack>
+            <Card>
+              <DataGrid rows={rows} columns={columns} />
+            </Card>
+          </Stack>
+        </Container>
+      </Box>
 
       <Modall
-        title="Create Genre"
-        modalOpen={createModalOpen}
         handleChange={handleChange}
         handleModalClose={handleCreateModalClose}
         handleSubmit={handleCreateSubmit}
-        submitLabel="Create"
+        modalOpen={createModalOpen}
         popupInfo={popupInfo}
+        submitLabel="Create"
+        title="Create User"
       />
 
       <Modall
-        title="Update Genre"
-        modalOpen={updateModalOpen}
         handleChange={handleChange}
         handleModalClose={handleUpdateModalClose}
         handleSubmit={handleUpdateSubmit}
-        submitLabel="Update"
+        modalOpen={updateModalOpen}
         popupInfo={popupInfo}
+        submitLabel="Update"
+        title="Upadte User"
       />
-
-      <DataGrid rows={rows} columns={columns} />
     </main>
   );
 }

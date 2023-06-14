@@ -2,8 +2,8 @@ import {
   Box,
   Button,
   FormControl,
+  Input,
   Modal,
-  TextField,
   Typography,
 } from '@mui/material';
 
@@ -36,6 +36,15 @@ export default function Modall({
     p: 4,
   };
 
+  const handleImage = (event: any) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      handleChange({ target: { name: 'file', value: reader.result } });
+    };
+    reader.readAsDataURL(file);
+  };
+
   return (
     <Modal
       open={modalOpen}
@@ -49,16 +58,7 @@ export default function Modall({
         </Typography>
 
         <FormControl fullWidth>
-          <TextField
-            type="text"
-            onChange={handleChange}
-            label="Name"
-            id="name"
-            name="name"
-            autoComplete="name"
-            value={popupInfo.name}
-            sx={{ m: 1 }}
-          />
+          <Input onChange={handleImage} type="file" id="file" name="file" />
         </FormControl>
         <Button type="reset">Cancel</Button>
         <Button type="submit" onClick={handleSubmit}>

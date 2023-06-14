@@ -1,16 +1,15 @@
 'use client';
 
+import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import {
   Box,
   Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Modal,
-  Select,
-  TextField,
+  Card,
+  Container,
+  Stack,
+  SvgIcon,
   Typography,
 } from '@mui/material';
 import {
@@ -22,12 +21,12 @@ import {
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
+import Modall from './components/Modall';
 
 export default function Users() {
   const [users, setUsers] = useState([]);
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
-  const [role, setRole] = useState('');
   const [popupInfo, setPopupInfo] = useState({
     id: '',
     full_name: '',
@@ -193,222 +192,61 @@ export default function Users() {
 
   const rows: GridRowsProp = users;
 
-  const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  };
-
   return (
-    <div className="App">
-      {/* <UpdateModal open={updateModalOpen} close={handleUpdateModalClose} data={popupInfo} /> */}
-      <Button onClick={handleCreateModalOpen}>Create</Button>
-
-      <Modal
-        open={createModalOpen}
-        onClose={handleCreateModalClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+    <main className="App">
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          py: 8,
+        }}
       >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Create User
-          </Typography>
+        <Container maxWidth="xl">
+          <Stack spacing={3}>
+            <Stack direction="row" justifyContent="space-between" spacing={4}>
+              <Stack spacing={1}>
+                <Typography variant="h4">Users</Typography>
+              </Stack>
+              <div>
+                <Button
+                  startIcon={
+                    <SvgIcon fontSize="small">
+                      <PlusIcon />
+                    </SvgIcon>
+                  }
+                  onClick={handleCreateModalOpen}
+                  variant="contained"
+                >
+                  Add
+                </Button>
+              </div>
+            </Stack>
+            <Card>
+              <DataGrid rows={rows} columns={columns} />
+            </Card>
+          </Stack>
+        </Container>
+      </Box>
 
-          <FormControl fullWidth>
-            <TextField
-              type="text"
-              onChange={handleChange}
-              label="Full Name"
-              id="full_name"
-              name="full_name"
-              autoComplete="full_name"
-              sx={{ m: 1 }}
-            />
-          </FormControl>
-          <FormControl fullWidth>
-            <TextField
-              type="text"
-              onChange={handleChange}
-              label="Username"
-              id="username"
-              name="username"
-              autoComplete="username"
-              sx={{ m: 1 }}
-            />
-          </FormControl>
+      <Modall
+        handleChange={handleChange}
+        handleModalClose={handleCreateModalClose}
+        handleSubmit={handleCreateSubmit}
+        modalOpen={createModalOpen}
+        popupInfo={popupInfo}
+        submitLabel="Create"
+        title="Create User"
+      />
 
-          <FormControl fullWidth>
-            <TextField
-              type="email"
-              label="Email"
-              onChange={handleChange}
-              id="email"
-              name="email"
-              autoComplete="email"
-              sx={{ m: 1 }}
-            />
-          </FormControl>
-
-          <FormControl fullWidth>
-            <TextField
-              type="password"
-              label="Password"
-              onChange={handleChange}
-              id="password"
-              name="password"
-              autoComplete="password"
-              sx={{ m: 1 }}
-            />
-          </FormControl>
-
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Role</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="role"
-              name="role"
-              label="Role"
-              sx={{ m: 1 }}
-              onChange={handleChange}
-            >
-              <MenuItem value={'USER'}>user</MenuItem>
-              <MenuItem value={'ARTIST'}>artist</MenuItem>
-              <MenuItem value={'MODERATOR'}>moderator</MenuItem>
-              <MenuItem value={'ADMIN'}>admin</MenuItem>
-              <MenuItem value={'SUPERADMIN'}>super admin</MenuItem>
-            </Select>
-          </FormControl>
-          <Button
-            type="reset"
-            onClick={() => {
-              setPopupInfo({
-                id: '',
-                full_name: '',
-                username: '',
-                email: '',
-                password: '',
-                role: '',
-              });
-              setCreateModalOpen(false);
-            }}
-          >
-            Cancel
-          </Button>
-          <Button type="submit" onClick={handleCreateSubmit}>
-            Create
-          </Button>
-        </Box>
-      </Modal>
-
-      <Modal
-        open={updateModalOpen}
-        onClose={handleUpdateModalClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Update User
-          </Typography>
-
-          <FormControl fullWidth>
-            <TextField
-              type="text"
-              onChange={handleChange}
-              label="Full Name"
-              value={popupInfo.full_name}
-              id="full_name"
-              name="full_name"
-              autoComplete="full_name"
-              sx={{ m: 1 }}
-            />
-          </FormControl>
-
-          <FormControl fullWidth>
-            <TextField
-              type="text"
-              onChange={handleChange}
-              label="Username"
-              value={popupInfo.username}
-              id="username"
-              name="username"
-              autoComplete="username"
-              sx={{ m: 1 }}
-            />
-          </FormControl>
-
-          <FormControl fullWidth>
-            <TextField
-              type="email"
-              label="Email"
-              onChange={handleChange}
-              value={popupInfo.email}
-              id="email"
-              name="email"
-              autoComplete="email"
-              sx={{ m: 1 }}
-            />
-          </FormControl>
-
-          <FormControl fullWidth>
-            <TextField
-              type="password"
-              label="Password"
-              onChange={handleChange}
-              id="password"
-              name="password"
-              autoComplete="password"
-              sx={{ m: 1 }}
-            />
-          </FormControl>
-
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Role</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="role"
-              name="role"
-              value={popupInfo.role}
-              label="Role"
-              sx={{ m: 1 }}
-              onChange={handleChange}
-            >
-              <MenuItem value={'USER'}>user</MenuItem>
-              <MenuItem value={'ARTIST'}>artist</MenuItem>
-              <MenuItem value={'MODERATOR'}>moderator</MenuItem>
-              <MenuItem value={'ADMIN'}>admin</MenuItem>
-              <MenuItem value={'SUPERADMIN'}>super admin</MenuItem>
-            </Select>
-          </FormControl>
-          <Button
-            type="reset"
-            onClick={() => {
-              setPopupInfo({
-                id: '',
-                full_name: '',
-                username: '',
-                email: '',
-                password: '',
-                role: '',
-              });
-              setUpdateModalOpen(false);
-            }}
-          >
-            Cancel
-          </Button>
-          <Button type="submit" onClick={handleUpdateSubmit}>
-            Update
-          </Button>
-        </Box>
-      </Modal>
-      <DataGrid rows={rows} columns={columns} />
-    </div>
+      <Modall
+        handleChange={handleChange}
+        handleModalClose={handleUpdateModalClose}
+        handleSubmit={handleUpdateSubmit}
+        modalOpen={updateModalOpen}
+        popupInfo={popupInfo}
+        submitLabel="Update"
+        title="Upadte User"
+      />
+    </main>
   );
 }
