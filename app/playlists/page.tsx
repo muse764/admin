@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
 export default function Playlists() {
-    return (
-        <main>
-            <h1>Playlists</h1>
-        </main>
-    )
+  return (
+    <main>
+      <h1>Playlists</h1>
+    </main>
+  );
 }

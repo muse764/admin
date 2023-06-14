@@ -11,7 +11,15 @@ import {
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-import { Box, Button, Card, Container, Stack, SvgIcon, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Card,
+  Container,
+  Stack,
+  SvgIcon,
+  Typography,
+} from '@mui/material';
 import Image from 'next/image';
 import Modall from './components/Modall';
 
