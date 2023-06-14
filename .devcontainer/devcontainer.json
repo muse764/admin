@@ -3,7 +3,7 @@
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-  "postCreateCommand": "npm install",
+  "postCreateCommand": "npm i -g pnpm && pnpm i",
   "customizations": {
     "vscode": {
       "extensions": [
