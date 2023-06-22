@@ -1,5 +1,5 @@
 {
-  "name": "Node.js & PostgreSQL",
+  "name": "Muse Admin Dev",
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
